@@ -1,33 +1,49 @@
 public class OOPSBannerApp {
 
-    public static void main(String[] args) {
+    /**
+     * Static Inner Class to encapsulate
+     * a character and its banner pattern.
+     */
+    public static class CharacterPattern {
 
-        // Get individual letter patterns
-        String[] oPattern = getOPattern();
-        String[] pPattern = getPPattern();
-        String[] sPattern = getSPattern();
+        private final char character;
+        private final String[] pattern;
 
-        // Create banner array (7 lines)
-        String[] banner = new String[7];
-
-        // Combine patterns line by line
-        for (int i = 0; i < 7; i++) {
-            banner[i] = String.join(" ",
-                    oPattern[i],
-                    oPattern[i],
-                    pPattern[i],
-                    sPattern[i]);
+        /**
+         * Constructor to initialize character and pattern
+         *
+         * @param character the character
+         * @param pattern   the 7-line banner pattern
+         */
+        public CharacterPattern(char character, String[] pattern) {
+            this.character = character;
+            this.pattern = pattern;
         }
 
-        // Print banner using enhanced for-loop
-        for (String line : banner) {
-            System.out.println(line);
+        /**
+         * Getter for character
+         *
+         * @return character
+         */
+        public char getCharacter() {
+            return character;
+        }
+
+        /**
+         * Getter for pattern
+         *
+         * @return 7-line pattern array
+         */
+        public String[] getPattern() {
+            return pattern;
         }
     }
 
-    // Helper method for letter O
-    public static String[] getOPattern() {
-        return new String[] {
+    /**
+     * Utility method to build O pattern
+     */
+    public static CharacterPattern createOPattern() {
+        return new CharacterPattern('O', new String[]{
                 "  *****  ",
                 " *     * ",
                 "*       *",
@@ -35,12 +51,14 @@ public class OOPSBannerApp {
                 "*       *",
                 " *     * ",
                 "  *****  "
-        };
+        });
     }
 
-    // Helper method for letter P
-    public static String[] getPPattern() {
-        return new String[] {
+    /**
+     * Utility method to build P pattern
+     */
+    public static CharacterPattern createPPattern() {
+        return new CharacterPattern('P', new String[]{
                 " ******  ",
                 " *     * ",
                 " *     * ",
@@ -48,19 +66,49 @@ public class OOPSBannerApp {
                 " *       ",
                 " *       ",
                 " *       "
-        };
+        });
     }
 
-    // Helper method for letter S
-    public static String[] getSPattern() {
-        return new String[] {
+    /**
+     * Utility method to build S pattern
+     */
+    public static CharacterPattern createSPattern() {
+        return new CharacterPattern('S', new String[]{
                 " ******  ",
-                "*       ",
-                "*       ",
+                "*        ",
+                "*        ",
                 " *****   ",
                 "       * ",
                 "       * ",
                 " ******  "
+        });
+    }
+
+    public static void main(String[] args) {
+
+        // Create character objects
+        CharacterPattern oPattern = createOPattern();
+        CharacterPattern pPattern = createPPattern();
+        CharacterPattern sPattern = createSPattern();
+
+        // Array of objects (O, O, P, S)
+        CharacterPattern[] word = {
+                oPattern,
+                oPattern,
+                pPattern,
+                sPattern
         };
+
+        // Build and print banner
+        for (int row = 0; row < 7; row++) {
+
+            StringBuilder line = new StringBuilder();
+
+            for (CharacterPattern cp : word) {
+                line.append(cp.getPattern()[row]).append(" ");
+            }
+
+            System.out.println(line);
+        }
     }
 }
